@@ -8,9 +8,12 @@ const hospitalSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    imageUrl: {
+    address: {
         type: String,
         required: true,
+    },
+    imageUrl: {
+        type: String,
     },
     specialities: {
         type: Array,
@@ -20,6 +23,19 @@ const hospitalSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    description : {
+        type: String,
+        required: true
+    },
+    numberOfDoctors:{
+        type: Number,
+        required: true
+    },
+    numberOfDepartments:{
+        type: Number,
+        required: true
+    },
+
     createdAt: {
         type: Date,
         default: Date.now(),

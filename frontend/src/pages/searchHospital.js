@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
 import Navbar from '../components/navbar';
 import useSearchHospital from '../hooks/useSearchHospital';
+import { useNavigate } from 'react-router-dom';
 
 const SearchHospital = () => {
+    const navigate = useNavigate();
     const [search, setSearch] = useState('');
     const { searchHospital } = useSearchHospital();
     const [allHospitalsData, setAllHospitalsData] = useState([]);
 
+    // const navigate =useNavigate();
+
     const handleSearch = async () => {
         const data = await searchHospital(search);
-        // console.log(data)
+        console.log(data)
         setAllHospitalsData(data);
+    };
+
+    const handleViewDetails = (hospital) => {
+        navigate(`/hospital/${hospital._id}`, { state: { hospital } });
     };
     
     // console.log(allHospitalsData)
@@ -30,7 +38,7 @@ const SearchHospital = () => {
                 <div className="viewAll-container">
                     <div className="viewAllCards">
                         {allHospitalsData.map((hospital, index) => (
-                            <div key={index} className="view-card">
+                            <div key={index} className="view-card" onClick={ () => handleViewDetails(hospital)}>
                                 <div className="image">
                                     <img src={hospital.imageUrl} alt="" />
                                 </div>

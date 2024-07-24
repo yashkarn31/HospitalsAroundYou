@@ -1,6 +1,6 @@
 const useEdit = () => {
 
-    const edit = async ({ name, cityLower, imageUrl, specialities, rating }) => {
+    const edit = async ({ name, cityLower,  imageUrl, specialities, rating }) => {
         try {
             const res = await fetch(`${process.env.BACKEND_URL}/api/v1/hospitals/edit`, {
                 method: "PUT",

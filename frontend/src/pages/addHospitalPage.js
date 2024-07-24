@@ -5,18 +5,22 @@ import useAddHospital from "../hooks/useAddHospital";
 const AddHospitalForm = () => {
     const [name, setName] = useState('');
     const [city, setCity] = useState('');
+    const [address, setAddress] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [specialities, setSpecialities] = useState([]);
     const [rating, setRating] = useState(0);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [description, setDescription] = useState('');
+    const [numberOfDoctors, setNumberOfDoctors] = useState(1);
+    const [numberOfDepartments, setNumberOfDepartments] = useState(1);
 
     const { add } = useAddHospital();
 
     const handleSubmit = () => {
         const cityLower = city.toLowerCase();
         console.log(cityLower);
-        console.log({ name, cityLower, imageUrl, specialities, rating });
-        add({ name, cityLower, imageUrl, specialities, rating });
+        console.log({ name, cityLower, address, imageUrl, specialities, rating, description, numberOfDoctors, numberOfDepartments });
+        add({ name, cityLower, address, imageUrl, specialities, rating, description, numberOfDoctors, numberOfDepartments });
     };
 
     const specialitiesList = ["General", "Cardiologist", "Neurologist", "Dermatologist", "Orthopedic"];
@@ -46,45 +50,85 @@ const AddHospitalForm = () => {
             <Navbar />
             <div className="add-container">
                 <div className="add-box">
-                <label htmlFor="name">Name</label>
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
 
-                <label htmlFor="city">City</label>
-                <input type="text" value={city} onChange={(e) => setCity(e.target.value)} />
-                
-                    <label htmlFor="imageUrl">Image URL</label>
-                    <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
-
-                    <label htmlFor="specialities">Specialities</label>
-                    <div className="dropdown">
-                        <div className="dropdown-selected" onClick={toggleDropdown}>
-                            {specialities.length > 0 ? specialities.join(', ') : "Select Speciality"}
-                        </div>
-                        {dropdownOpen && (
-                            <ul className="dropdown-menu">
-                                {specialitiesList.map(speciality => (
-                                    <li key={speciality} onClick={() => handleSpecialityChange(speciality)}>
-                                        {speciality}
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
+                    <div className="input-label">
+                        <label htmlFor="name">Name :</label>
+                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
                     </div>
 
-                    <label htmlFor="rating">Rating</label>
-                    <input
-                        type="number"
-                        value={rating}
-                        onChange={handleRatingChange}
-                        step="0.1"
-                        min="0"
-                        max="5"
-                    />
-                    <button onClick={handleSubmit}>Add Hospital</button>
+                    <div className="input-label">
+                        <label htmlFor="city">City :</label>
+                        <input type="text" value={city} onChange={(e) => setCity(e.target.value)} />
+                    </div>
+
+                    <div className="input-label">
+                        <label htmlFor="address">Address :</label>
+                        <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} />
+                    </div>
+
+                    <div className="input-label">
+                        <label htmlFor="imageUrl">Image URL :</label>
+                        <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+                    </div>
+                    <div className="input-label">
+                        <label htmlFor="specialities">Specialities :</label>
+                        <div className="dropdown">
+                            <div className="dropdown-selected" onClick={toggleDropdown}>
+                                {specialities.length > 0 ? specialities.join(', ') : "Select Speciality"}
+                            </div>
+                            {dropdownOpen && (
+                                <ul className="dropdown-menu">
+                                    {specialitiesList.map(speciality => (
+                                        <li key={speciality} onClick={() => handleSpecialityChange(speciality)}>
+                                            {speciality}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="input-label">
+                        <label htmlFor="description">Description :</label>
+                        <textarea
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="input-label">
+                        <label htmlFor="numberOfDoctors">Number of Doctors :</label>
+                        <input
+                            type="number"
+                            value={numberOfDoctors}
+                            onChange={(e) => setNumberOfDoctors(e.target.value)}
+                        />
+                    </div>
+                        <div className="input-label">
+                        <label htmlFor="numberOfDepartments">Number of Departments :</label>
+                        <input
+                            type="number"
+                            value={numberOfDepartments}
+                            onChange={(e) => setNumberOfDepartments(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="input-label">
+                        <label htmlFor="rating">Rating :</label>
+                        <input
+                            type="number"
+                            value={rating}
+                            onChange={handleRatingChange}
+                            step="0.1"
+                            min="0"
+                            max="5"
+                        />
+                    </div>
+                        <button onClick={handleSubmit}>Add Hospital</button>
+                    </div>
                 </div>
-            </div>
-        </>
-    );
+            </>
+            );
 };
 
-export default AddHospitalForm;
+            export default AddHospitalForm;

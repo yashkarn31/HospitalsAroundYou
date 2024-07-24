@@ -7,6 +7,7 @@ import AddHospitalForm from "./src/pages/addHospitalPage";
 import SearchHospital from "./src/pages/searchHospital";
 import { useSelector } from 'react-redux';
 import ViewAllHospitalPage from './src/pages/viewAllHospitalsPage';
+import HospitalDetailPage from './src/pages/descriptionPage';
 
 const AppRouter = () => {
 
@@ -36,6 +37,10 @@ const AppRouter = () => {
         {
             path: "/getall",
             element: isAuthorized ? <ViewAllHospitalPage/> : <Navigate to="/" />
+        },
+        {
+            path: "/hospital/:id",
+            element: <HospitalDetailPage/>
         }
     ]);
 

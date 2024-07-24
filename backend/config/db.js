@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-"mongodb+srv://yashkarn3133:nidXDvuu06FBhmlD@cluster0.gut1ir3.mongodb.net/";
-
 const uri = "mongodb+srv://<username>:<password>@cluster0.gut1ir3.mongodb.net/<dbName>?retryWrites=true&w=majority&appName=Cluster0";
 
 let dbURL = uri.replace("<username>", process.env.DB_USERNAME);

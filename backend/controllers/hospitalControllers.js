@@ -3,8 +3,9 @@ const hospitalModel = require("../model/hospitalModel.js");
 
 const addHospital = async (req, res) => {
     try {
-        const { name, cityLower, imageUrl, specialities, rating } = req.body;
-        if (!name || !cityLower || !specialities || !rating) {
+        const { name, cityLower, address, imageUrl, specialities, rating, description, numberOfDoctors, numberOfDepartments } = req.body;
+        console.log({ name, cityLower, address, imageUrl, specialities, rating, description, numberOfDoctors, numberOfDepartments });
+        if (!name || !cityLower || !address || !specialities || !rating || !description || !numberOfDoctors || !numberOfDepartments) {
             res.status(400).json({
                 status: "fail",
                 message: "All fields are required",
@@ -16,9 +17,13 @@ const addHospital = async (req, res) => {
         const newHospital = await hospitalModel.create({
             name,
             cityLower,
+            address,
             imageUrl,
             specialities,
             rating,
+            description,
+            numberOfDoctors,
+            numberOfDepartments,
         });
         res.status(201).json({
             status: "success",

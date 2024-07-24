@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import useListAllHospitals from "../hooks/useListAllHospitals";
 import Navbar from "../components/navbar";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const ViewAllHospitalPage = () => {
     const { list } = useListAllHospitals();
+    const navigate = useNavigate();
     const [allHospitalsData, setAllHospitalsData] = useState([]);
     const [editData, setEditData] = useState({});
     const [editId, setEditId] = useState(null);
@@ -90,48 +92,91 @@ const ViewAllHospitalPage = () => {
         }
     };
 
+    const handleViewDetails = (hospital) => {
+        navigate(`/hospital/${hospital._id}`, { state: { hospital } });
+    };
+
     return (
         <>
             <Navbar />
             <div className="viewAll-container">
                 <div className="viewAllCards">
                     {allHospitalsData.map((hospital) => (
-                        <div key={hospital._id} className={`view-card ${editId === hospital._id ? 'editing' : ''}`}>
+                        <div key={hospital._id} className={`view-card ${editId === hospital._id ? 'editing' : ''}`} >
                             <div className="image"><img src={hospital.imageUrl} alt="" /></div>
                             <div className="text">
                                 {editId === hospital._id ? (
                                     <>
-                                        <label htmlFor="name">Name: </label>
-                                        <input type="text" value={editData.name} onChange={(e) => setEditData({ ...editData, name: e.target.value })} />
-                                        <label htmlFor="city">City: </label>
-                                        <input type="text" value={editData.cityLower} onChange={(e) => setEditData({ ...editData, cityLower: e.target.value })} />
-                                        <label htmlFor="imageUrl">Image Url: </label>
-                                        <input type="text" value={editData.imageUrl} onChange={(e) => setEditData({ ...editData, imageUrl: e.target.value })} />
-                                        <label htmlFor="specialities">Specialities: </label>
-                                        <div className="dropdown">
-                                            <div className="dropdown-selected" onClick={toggleDropdown}>
-                                                {specialities.length > 0 ? specialities.join(', ') : "Select Speciality"}
+                                        <div className="input-container-edit">
+                                            <div className="edit-input">
+                                                <label htmlFor="name">Name: </label>
+                                                <input type="text" value={editData.name} onChange={(e) => setEditData({ ...editData, name: e.target.value })} />
                                             </div>
-                                            {dropdownOpen && (
-                                                <ul className="dropdown-menu">
-                                                    {specialitiesList.map(speciality => (
-                                                        <li key={speciality} onClick={() => handleSpecialityChange(speciality)}>
-                                                            {specialities.includes(speciality) ? <strong>{speciality}</strong> : speciality}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            )}
+                                            <div className="edit-input">
+
+                                                <label htmlFor="city">City: </label>
+                                                <input type="text" value={editData.cityLower} onChange={(e) => setEditData({ ...editData, cityLower: e.target.value })} />
+                                            </div>
+                                            <div className="edit-input">
+
+                                                <label htmlFor="address">Address: </label>
+                                                <input type="text" value={editData.address} onChange={(e) => setEditData({ ...editData, address: e.target.value })} />
+                                            </div>
+                                            <div className="edit-input">
+
+                                                <label htmlFor="imageUrl">Image Url: </label>
+                                                <input type="text" value={editData.imageUrl} onChange={(e) => setEditData({ ...editData, imageUrl: e.target.value })} />
+                                            </div>
+                                            <div className="edit-input">
+
+                                                <label htmlFor="specialities">Specialities: </label>
+                                                <div className="dropdown">
+                                                    <div className="dropdown-selected" onClick={toggleDropdown}>
+                                                        {specialities.length > 0 ? specialities.join(', ') : "Select Speciality"}
+                                                    </div>
+                                                    {dropdownOpen && (
+                                                        <ul className="dropdown-menu">
+                                                            {specialitiesList.map(speciality => (
+                                                                <li key={speciality} onClick={() => handleSpecialityChange(speciality)}>
+                                                                    {specialities.includes(speciality) ? <strong>{speciality}</strong> : speciality}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            <div className="edit-input">
+                                                <label htmlFor="description">Description: </label>
+                                                <input type="text" value={editData.description} onChange={(e) => setEditData({ ...editData, description: e.target.value })} />
+                                            </div>
+
+                                            <div className="edit-input">
+                                                <label htmlFor="numberOfDoctors">Number of Doctors: </label>
+                                                <input type="text" value={editData.numberOfDoctors} onChange={(e) => setEditData({ ...editData, numberOfDoctors: e.target.value })} />
+                                            </div>
+
+                                            <div className="edit-input">
+                                                <label htmlFor="numberOfDepartments">Number of Departments: </label>
+                                                <input type="text" value={editData.numberOfDepartments} onChange={(e) => setEditData({ ...editData, numberOfDepartments: e.target.value })} />
+                                            </div>
+
+
+                                            <div className="edit-input">
+                                                <label htmlFor="rating">Rating: </label>
+                                                <input type="text" value={editData.rating} onChange={(e) => setEditData({ ...editData, rating: e.target.value })}
+                                                />
+                                            </div>
                                         </div>
-                                        <label htmlFor="rating">Rating: </label>
-                                        <input type="text" value={editData.rating} onChange={(e) => setEditData({ ...editData, rating: e.target.value })} />
                                     </>
                                 ) : (
-                                    <>
-                                        <p>Name: {hospital.name}</p>
-                                        <p>City: {hospital.cityLower}</p>
-                                        <p>Specialities: {hospital.specialities.join(', ')}</p>
-                                        <p>Rating: {hospital.rating}</p>
-                                    </>
+                                        <div onClick={() => handleViewDetails(hospital)}>
+
+                                            <p>Name: {hospital.name}</p>
+                                            <p>City: {hospital.cityLower}</p>
+                                            <p>Specialities: {hospital.specialities.join(', ')}</p>
+                                            <p>Rating: {hospital.rating}</p>
+                                    </div>
                                 )}
                                 <div className="crud">
                                     {editId === hospital._id ? (
